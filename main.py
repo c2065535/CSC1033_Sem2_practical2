@@ -7,6 +7,10 @@ COLLECTION = "online_retail"
 client = pymongo.MongoClient("mongodb://csc1033:csc1033@cs-mongodb06.ncl.ac.uk:27017/?authSource=admin")
 print(client.list_database_names())
 
+# Counting Number of Query Hits
+# posts.count_documents({})
+# e.g. posts.count_documents({"author": "Mike"})
+
 # connect to database
 db = client[DATABASE]
 
@@ -24,8 +28,32 @@ print(col.name, ",", col.estimated_document_count())
 #query = {"Country": "United Kingdom"}
 
 # more "complex" query
-query = {"$or": [{"Invoice": 489434}, {"Country": "France"}]}
+# query = {"$or": [{"Invoice": 489434}, {"Country": "France"}]}
+# query = {"$or":[{"Price": {"$gt": 19}}, {"Price": {"$lt": 20}}]}
 
+#   Does this work?    query = {"%max": [{"Price": "$Value"}]}
+
+# ////////////////////////////////////////////////////////////////////////////////////
+
+# PRACTICAL Q1
+# query = {"Description": "EDWARDIAN TOILET ROLL UNIT"}
+#   This query runs fine
+# query = {"Description": "Edwardian Toilet Roll Unit"}
+#   This query does not find the product description.
+
+# PRACTICAL Q2
+# query = {"Price": {"$gt": 10}}
+
+# PRACTICAL Q3
+# query = {"Customer ID": 14000}
+
+# PRACTICAL Q4
+# query = {"Quantity": {"$lt": 5}}
+
+# PRACTICAL Q5
+# query = {"$and":[{"Country": "United Kingdom"}, {"Quantity": {"$gt": 10}}]}
+
+# ////////////////////////////////////////////////////////////////////////////////////
 
 # run query on collection
 doc = col.find(query)
